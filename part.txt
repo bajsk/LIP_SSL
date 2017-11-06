@@ -1,0 +1,20 @@
+Label order:
+1.Hat
+2.Hair
+3.Sunglasses
+4.Upper-clothes
+5.Dress
+6.Coat
+7.Socks
+8.Pants
+9.Glove
+10.Scarf
+11.Skirt
+12.Jumpsuits
+13.Face
+14.Right-arm
+15.Left-arm
+16.Right-leg
+17.Left-leg
+18.Right-shoe
+19.Left-shoe
