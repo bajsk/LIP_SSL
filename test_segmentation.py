@@ -1,8 +1,5 @@
 import os
 import numpy as np
-from argparse import ArgumentParser
-from os.path import join
-import argparse
 import sys
 
 caffe_root = os.getcwd() + "/code/"
@@ -21,7 +18,8 @@ if __name__ == '__main__':
 
     model_path = "/home/btran/publicWorkspace/dev/LIP_SSL/human/config/attention/deploy.prototxt"
     weight_path = "/home/btran/publicWorkspace/dev/LIP_SSL/human/model/attention/attention+ssl.caffemodel"
-
+    label_colours = cv2.imread("human_parsing.png", 1).astype(np.uint8)
+    
     mean = [104.008, 116.669, 122.675]
     
     net = caffe.Net(model_path, weight_path, caffe.TEST)
@@ -30,9 +28,7 @@ if __name__ == '__main__':
 
     output_shape = net.blobs['fc8_interp'].data.shape
 
-    label_colours = cv2.imread("attention.png").astype(np.uint8)
-    
-    imgfile = './temp.png'
+    imgfile = './166.jpg'
     img = cv2.imread(imgfile, 1)
     img = img.astype(np.float32)
     img -= mean
@@ -42,5 +38,12 @@ if __name__ == '__main__':
     out = net.forward()
 
     prediction = net.blobs['fc8_mask'].data[0, ...][0]
-    cv2.imwrite("prediction.png", prediction)    
+    prediction = prediction.astype(np.int8)
+    prediction = cv2.merge((prediction, prediction, prediction))
+
+    prediction_rgb = np.zeros(prediction.shape, dtype=np.uint8)
+
+    label_colours_bgr = label_colours[..., ::-1]
+    cv2.LUT(prediction, label_colours_bgr, prediction_rgb)
     
+    cv2.imwrite("prediction.png", prediction_rgb)        
