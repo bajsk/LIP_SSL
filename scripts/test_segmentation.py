@@ -6,8 +6,9 @@ import os
 import numpy as np
 import sys
 
-caffe_root = os.getcwd() + "/code/"
-sys.path.insert(0, caffe_root + 'python')
+caffe_root = os.path.dirname(os.path.realpath(__file__)) + "/../caffe_ssl/"
+sys.path.insert(0, caffe_root + '/build/install/python')
+
 import caffe
 caffe.set_mode_gpu()
 sys.path.append('/usr/local/lib/python2.7/site-packages')
