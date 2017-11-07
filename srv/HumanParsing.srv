@@ -1,0 +1,5 @@
+std_msgs/Header header
+sensor_msgs/Image rgb_img
+---
+std_msgs/Header header
+sensor_msgs/Image segmentation_img
