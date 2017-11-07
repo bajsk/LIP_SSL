@@ -1,3 +1,7 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+from __future__ import print_function
 import os
 import numpy as np
 import sys
@@ -5,7 +9,7 @@ import sys
 caffe_root = os.getcwd() + "/code/"
 sys.path.insert(0, caffe_root + 'python')
 import caffe
-caffe.set_mode_cpu()
+caffe.set_mode_gpu()
 sys.path.append('/usr/local/lib/python2.7/site-packages')
 import cv2
 
@@ -16,8 +20,9 @@ classes = ['background', 'hat', 'hair', 'glove', 'sunglasses', 'upperclothes',
 
 if __name__ == '__main__':
 
-    model_path = "/home/btran/publicWorkspace/dev/LIP_SSL/human/config/attention/deploy.prototxt"
-    weight_path = "/home/btran/publicWorkspace/dev/LIP_SSL/human/model/attention/attention+ssl.caffemodel"
+    MODEL_PATH = os.path.dirname(os.path.realpath(__file__)) + "/../human/"
+    model_path = MODEL_PATH + "/config/attention/deploy.prototxt"
+    weight_path = MODEL_PATH + "/model/attention/attention+ssl.caffemodel"
     label_colours = cv2.imread("human_parsing.png", 1).astype(np.uint8)
     
     mean = [104.008, 116.669, 122.675]
@@ -28,7 +33,7 @@ if __name__ == '__main__':
 
     output_shape = net.blobs['fc8_interp'].data.shape
 
-    imgfile = './166.jpg'
+    imgfile = os.path.dirname(os.path.realpath(__file__)) + "/../images/frame0007.jpg"
     img = cv2.imread(imgfile, 1)
     img = img.astype(np.float32)
     img -= mean
