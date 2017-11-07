@@ -13,7 +13,7 @@ import caffe
 caffe.set_mode_cpu()
 sys.path.append('/usr/local/lib/python2.7/site-packages')
 import cv2
-from padding import padding
+from utils import padding
 
 classes = ['background', 'hat', 'hair', 'glove', 'sunglasses', 'upperclothes',
            'dress', 'coat', 'socks', 'pants', 'jumpsuits', 'scarf', 'skirt',
