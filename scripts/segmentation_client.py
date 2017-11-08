@@ -8,20 +8,8 @@ import cv2
 import cv_bridge
 import os
 
-import sys
-caffe_root = os.path.dirname(os.path.realpath(__file__)) + "/../caffe_ssl/"
-sys.path.insert(0, caffe_root + '/build/install/python')
-
-import caffe
-GPU_ID = 0
-caffe.set_mode_gpu()
-caffe.set_device(GPU_ID)
-
-
 def human_parsing_client(img_msg):
-    print ("temp")
     rospy.wait_for_service("/human_parsing")
-    print ("temp2")
 
     try:
         human_parsing = rospy.ServiceProxy("human_parsing", HumanParsing)
