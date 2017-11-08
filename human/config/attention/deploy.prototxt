@@ -2,8 +2,8 @@ name: "attention"
 input: "data"
 input_dim: 1
 input_dim: 3
-input_dim: 480
-input_dim: 640
+input_dim: 481
+input_dim: 641
 
 #mean_value: 104.008
 #mean_value: 116.669
