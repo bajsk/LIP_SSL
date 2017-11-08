@@ -25,7 +25,7 @@ class SegmentationServerClass():
         MODEL_PATH = os.path.dirname(os.path.realpath(__file__)) + "/../human/"
         self.model_path = MODEL_PATH + "/config/attention/deploy.prototxt"
         self.weight_path = MODEL_PATH + "/model/attention/attention+ssl.caffemodel"
-        self.label_colours = cv2.imread("human_parsing.png", 1).astype(np.uint8)
+        self.label_colours = cv2.imread(os.path.dirname(os.path.realpath(__file__)) + "/human_parsing.png", 1).astype(np.uint8)
         self.br = cv_bridge.CvBridge()
         self.gpu_id = gpu_id
         self.mean = [104.008, 116.669, 122.675]
