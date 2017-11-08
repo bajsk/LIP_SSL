@@ -1,0 +1,17 @@
+<launch>
+
+  <machine
+      name="bjsk"
+      address="192.168.101.2"
+      user="bjsk"
+      env-loader="/home/bjsk/publicWorkspace/dev/ros/indigo/devel/remote_env_loader_hsr42.sh"
+      />
+
+  <node
+      machine="bjsk"
+      name="human_parsing_ros_node"
+      pkg="human_parsing"
+      type="segmentation_server_class.py"
+  />
+  
+</launch>  
