@@ -10,9 +10,10 @@ caffe_root = os.path.dirname(os.path.realpath(__file__)) + "/../caffe_ssl/"
 sys.path.insert(0, caffe_root + '/build/install/python')
 
 import caffe
-caffe.set_mode_gpu()
+caffe.set_mode_cpu()
 sys.path.append('/usr/local/lib/python2.7/site-packages')
 import cv2
+from utils import padding
 
 classes = ['background', 'hat', 'hair', 'glove', 'sunglasses', 'upperclothes',
            'dress', 'coat', 'socks', 'pants', 'jumpsuits', 'scarf', 'skirt',
@@ -34,8 +35,9 @@ if __name__ == '__main__':
 
     output_shape = net.blobs['fc8_interp'].data.shape
 
-    imgfile = os.path.dirname(os.path.realpath(__file__)) + "/../images/frame0007.jpg"
+    imgfile = os.path.dirname(os.path.realpath(__file__)) + "/../images/frame0006.jpg"
     img = cv2.imread(imgfile, 1)
+    img = padding(img, 1)
     img = img.astype(np.float32)
     img -= mean
     img = cv2.resize(img, (640, 480), interpolation=cv2.INTER_LINEAR)
@@ -44,6 +46,7 @@ if __name__ == '__main__':
     out = net.forward()
 
     prediction = net.blobs['fc8_mask'].data[0, ...][0]
+    prediction = prediction[1 : 481, 1 : 641]
     prediction = prediction.astype(np.int8)
     prediction = cv2.merge((prediction, prediction, prediction))
 
