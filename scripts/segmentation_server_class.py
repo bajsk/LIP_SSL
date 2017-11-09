@@ -67,7 +67,7 @@ class SegmentationServerClass():
             cv2.LUT(prediction, label_colours_bgr, prediction_rgb)
             overlay_img = overlay(img, prediction_rgb)
             cv2.imwrite(os.path.dirname(os.path.realpath(__file__)) + "/../images/overlay.png", overlay_img)
-            segmentation_img_msg = self.br.cv2_to_imgmsg(prediction_rgb, encoding = "bgr8")
+            segmentation_img_msg = self.br.cv2_to_imgmsg(prediction, encoding = "bgr8")
             
             return HumanParsingResponse(segmentation_img = segmentation_img_msg)
 
