@@ -65,6 +65,8 @@ class SegmentationServerClass():
             prediction_rgb = np.zeros(prediction.shape, dtype=np.uint8)
             label_colours_bgr = self.label_colours[..., ::-1]
             cv2.LUT(prediction, label_colours_bgr, prediction_rgb)
+            cv2.imwrite(os.path.dirname(os.path.realpath(__file__)) + "/../images/prediction_rgb.png", prediction_rgb)
+
             overlay_img = overlay(img, prediction_rgb)
             cv2.imwrite(os.path.dirname(os.path.realpath(__file__)) + "/../images/overlay.png", overlay_img)
             segmentation_img_msg = self.br.cv2_to_imgmsg(prediction_rgb, encoding = "bgr8")
