@@ -22,6 +22,7 @@ sys.path.append('/usr/local/lib/python2.7/site-packages')
 class SegmentationServerClass():
     
     def __init__(self, gpu_id = None):
+
         MODEL_PATH = os.path.dirname(os.path.realpath(__file__)) + "/../human/"
         self.model_path = MODEL_PATH + "/config/attention/deploy.prototxt"
         self.weight_path = MODEL_PATH + "/model/attention/attention+ssl.caffemodel"
@@ -35,6 +36,7 @@ class SegmentationServerClass():
         rospy.spin()
     
     def handle_human_parsing(self, req):
+
         if self.net == None:
             try:
                 self.net = caffe.Net(self.model_path, self.weight_path, caffe.TEST)
@@ -51,6 +53,8 @@ class SegmentationServerClass():
                 caffe.set_device(self.gpu_id)
             else:
                 caffe.set_mode_cpu()
+
+            cv2.imwrite(os.path.dirname(os.path.realpath(__file__)) + "/../images/rgb_image.png", img)
             
             img_padding = padding(img, 1)
             img_padding = img_padding.astype(np.float32)
@@ -70,7 +74,8 @@ class SegmentationServerClass():
             overlay_img = overlay(img, prediction_rgb)
             cv2.imwrite(os.path.dirname(os.path.realpath(__file__)) + "/../images/overlay.png", overlay_img)
             segmentation_img_msg = self.br.cv2_to_imgmsg(prediction_rgb, encoding = "bgr8")
-            
+
+            self.net = None
             return HumanParsingResponse(segmentation_img = segmentation_img_msg)
 
         except cv_bridge.CvBridgeError as e:
